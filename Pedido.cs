@@ -1,36 +1,40 @@
-public class Pedido
+namespace EspacioCadeteria;
+public enum Estado
+{
+    Pendiente,
+    EnProceso,
+    Entregado,
+    Cancelado
+}
+public class Pedidos
 {
     private int nro;
     private string obs;
     private Cliente cliente;
-    private string estado;
+    private Estado estado;
 
-    public int Nro { get => nro; set => nro = value; }
-    public string Obs { get => obs; set => obs = value; }
-    public Cliente Cliente { get => cliente; set => cliente = value; }
-    public string Estado { get => estado; set => estado = value; }
-
-    public Pedido(int nro, string obs, string estado,string cliNombre,string cliDireccion,string cliTelefono,string cliIndicacionesDireccion)
+    public Pedidos(int nro, string obs, Cliente cliente, Estado estado)
     {
         this.nro = nro;
         this.obs = obs;
-        cliente = new Cliente(cliNombre, cliDireccion, cliTelefono, cliIndicacionesDireccion);
-        this.estado = estado;
+        this.Cliente = cliente;
+        this.Estado = estado;
     }
 
-    public void VerDireccionCliente()
+    public int Nro { get => nro; private set => nro = value; }
+    public string Obs { get => obs; private set => obs = value; }
+    public Cliente Cliente { get => cliente; private set => cliente = value; }
+    public Estado Estado { get => estado; private set => estado = value; }
+    public void CambiarEstado(Estado nuevoEstado)
     {
-        Console.WriteLine($"Dirección del cliente: {cliente.Direccion} {cliente.DatosReferenciaDireccion}");
+        this.Estado = nuevoEstado;
     }
 
-    public void VerDatosCliente()
+    public void mostrarPedido()
     {
-        Console.WriteLine($"Datos del cliente: {cliente.Nombre}, Teléfono: {cliente.Telefono}");
+        Console.WriteLine($"Nro: {nro}");
+        Console.WriteLine($"Obs: {obs}");
+        Console.WriteLine($"Cliente: {cliente.VerDatosCliente()}");
+        Console.WriteLine($"Estado: {estado}");
     }
-
-    public void CambiarEstado(string nuevoEstado)
-    {
-        estado = nuevoEstado;
-    }
-
 }
