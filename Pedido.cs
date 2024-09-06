@@ -13,6 +13,8 @@ public class Pedidos
     private Cliente cliente;
     private Estado estado;
 
+    private Cadete cadete;
+
     public Pedidos(int nro, string obs, Cliente cliente, Estado estado)
     {
         this.nro = nro;
@@ -25,6 +27,8 @@ public class Pedidos
     public string Obs { get => obs; private set => obs = value; }
     public Cliente Cliente { get => cliente; private set => cliente = value; }
     public Estado Estado { get => estado; private set => estado = value; }
+    public Cadete Cadete { get => cadete; set => cadete = value; }
+
     public void CambiarEstado(Estado nuevoEstado)
     {
         this.Estado = nuevoEstado;

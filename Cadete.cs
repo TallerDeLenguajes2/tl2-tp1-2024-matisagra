@@ -5,14 +5,14 @@ public class Cadete
     private string nombre;
     private string direccion;
     private string telefono;
-    private List<Pedidos> listaPedidos;
+    
+
     public Cadete(int id, string nombre, string direccion, string telefono)
     {
         this.Id = id;
         this.Nombre = nombre;
         this.Direccion = direccion;
         this.Telefono = telefono;
-        this.ListaPedidos = new List<Pedidos>();
     }
     public int Id
     {
@@ -34,12 +34,8 @@ public class Cadete
         get => telefono;
         private set => telefono = value;
     }
-    public List<Pedidos> ListaPedidos
-    {
-        get => listaPedidos;
-        private set => listaPedidos = value;
-    }
-    public void agregarPedido(Pedidos pedido)
+  
+    /* public void agregarPedido(Pedidos pedido)
     {
         ListaPedidos.Add(pedido);
     }
@@ -65,5 +61,5 @@ public class Cadete
         {
             pedido.mostrarPedido();
         }
-    }
-}
+    }*/
+} 
