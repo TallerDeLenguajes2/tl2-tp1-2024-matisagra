@@ -8,11 +8,15 @@ public class Cadeteria
 
     private List<Pedidos> listadoPedidos;
 
+    public Cadeteria()
+    {
+    }
+
     public Cadeteria(string nombre, string telefono)
     {
         this.Nombre = nombre;
         this.Telefono = telefono;
-        this.ListadoCadetes = new List<Cadete>();
+        this.ListadoCadetes1 = new List<Cadete>();
         this.ListadoPedidos = new List<Pedidos>();
     }
 
@@ -26,16 +30,13 @@ public class Cadeteria
         get => telefono;
         private set => telefono = value;
     }
-    public List<Cadete> ListadoCadetes
-    {
-        get => listadoCadetes;
-        private set => listadoCadetes = value;
-    }
+    
     public List<Pedidos> ListadoPedidos { get => listadoPedidos; set => listadoPedidos = value; }
+    public List<Cadete> ListadoCadetes1 { get => listadoCadetes; set => listadoCadetes = value; }
 
     public int JornalACobrar(int idCadete)
     {
-        Cadete cadeteSeleccionado = listadoCadetes.FirstOrDefault(c => c.Id == idCadete);
+        Cadete cadeteSeleccionado = ListadoCadetes1.FirstOrDefault(c => c.Id == idCadete);
 
         if (cadeteSeleccionado == null)
         {
@@ -66,7 +67,7 @@ public class Cadeteria
     public void AsignarCadeteAPedido(int idCadete, int idPedido)
     {
         // Buscar el cadete por su ID
-        Cadete cadeteSeleccionado = listadoCadetes.FirstOrDefault(c => c.Id == idCadete);
+        Cadete cadeteSeleccionado = ListadoCadetes1.FirstOrDefault(c => c.Id == idCadete);
         if (cadeteSeleccionado == null)
         {
             Console.WriteLine("Cadete no encontrado.");
@@ -98,7 +99,7 @@ public class Cadeteria
         }
 
         // Buscar el nuevo cadete por su ID
-        Cadete nuevoCadete = ListadoCadetes.FirstOrDefault(c => c.Id == idNuevoCadete);
+        Cadete nuevoCadete = ListadoCadetes1.FirstOrDefault(c => c.Id == idNuevoCadete);
         if (nuevoCadete == null)
         {
             Console.WriteLine("Cadete no encontrado.");
@@ -119,11 +120,11 @@ public class Cadeteria
     
     public void EliminarCadete(Cadete cadete)
     {
-        ListadoCadetes.Remove(cadete);
+        ListadoCadetes1.Remove(cadete);
     }
     public void AgregarCadete(Cadete cadete)
     {
-        ListadoCadetes.Add(cadete);
+        ListadoCadetes1.Add(cadete);
     }
 
 
