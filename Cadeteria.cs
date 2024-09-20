@@ -30,7 +30,7 @@ public class Cadeteria
         get => telefono;
         private set => telefono = value;
     }
-    
+
     public List<Pedidos> ListadoPedidos { get => listadoPedidos; set => listadoPedidos = value; }
     public List<Cadete> ListadoCadetes1 { get => listadoCadetes; set => listadoCadetes = value; }
 
@@ -40,92 +40,75 @@ public class Cadeteria
 
         if (cadeteSeleccionado == null)
         {
-            Console.WriteLine("Cadete no encontrado.");
-            return 0;
+            return 0;  // Retornamos 0 si no se encuentra el cadete
         }
 
-        List<Pedidos> pedidosDelCadete = new List<Pedidos>();
-
-        // Recorrer cada pedido en la lista de pedidos de la cadetería
-        foreach (Pedidos pedido in ListadoPedidos)
-        {
-            // Comprobar si el pedido tiene un cadete asignado
-            if (pedido.Cadete != null)
-            {
-                // Verificar si el ID del cadete del pedido coincide con el ID proporcionado
-                if (pedido.Cadete.Id == idCadete)
-                {
-                    // Si coincide, agregar el pedido a la lista de pedidos del cadete
-                    pedidosDelCadete.Add(pedido);
-                }
-            }
-        }
+        List<Pedidos> pedidosDelCadete = ListadoPedidos
+            .Where(p => p.Cadete != null && p.Cadete.Id == idCadete)
+            .ToList();
 
         return pedidosDelCadete.Count * 500;
     }
 
-    public void AsignarCadeteAPedido(int idCadete, int idPedido)
+
+    public string AsignarCadeteAPedido(int idCadete, int idPedido)
     {
-        // Buscar el cadete por su ID
         Cadete cadeteSeleccionado = ListadoCadetes1.FirstOrDefault(c => c.Id == idCadete);
         if (cadeteSeleccionado == null)
         {
-            Console.WriteLine("Cadete no encontrado.");
-            return;
+            return "Cadete no encontrado.";
         }
 
-        // Buscar el pedido por su número
         Pedidos pedidoSeleccionado = ListadoPedidos.FirstOrDefault(p => p.Nro == idPedido);
         if (pedidoSeleccionado == null)
         {
-            Console.WriteLine("Pedido no encontrado.");
-            return;
+            return "Pedido no encontrado.";
         }
 
-        // Asignar el cadete al pedido
         pedidoSeleccionado.Cadete = cadeteSeleccionado;
-        Console.WriteLine($"El cadete {cadeteSeleccionado.Nombre} ha sido asignado al pedido {pedidoSeleccionado.Nro}.");
+        return $"El cadete {cadeteSeleccionado.Nombre} ha sido asignado al pedido {pedidoSeleccionado.Nro}.";
     }
 
 
-    public void ReasignarCadeteAPedido(int nroPedido, int idNuevoCadete)
+
+    public string ReasignarCadeteAPedido(int nroPedido, int idNuevoCadete)
     {
-        // Buscar el pedido por su número
         Pedidos pedido = ListadoPedidos.FirstOrDefault(p => p.Nro == nroPedido);
         if (pedido == null)
         {
-            Console.WriteLine("Pedido no encontrado.");
-            return;
+            return "Pedido no encontrado.";
         }
 
-        // Buscar el nuevo cadete por su ID
         Cadete nuevoCadete = ListadoCadetes1.FirstOrDefault(c => c.Id == idNuevoCadete);
         if (nuevoCadete == null)
         {
-            Console.WriteLine("Cadete no encontrado.");
-            return;
+            return "Cadete no encontrado.";
         }
 
-        // Verificar si el pedido ya tiene un cadete asignado
-        if (pedido.Cadete != null)
-        {
-            Console.WriteLine($"El pedido {pedido.Nro} estaba asignado al cadete {pedido.Cadete.Nombre}. Reasignando al nuevo cadete {nuevoCadete.Nombre}...");
-        }
-
-        // Asignar el nuevo cadete al pedido
+        string mensaje = $"El pedido {pedido.Nro} estaba asignado al cadete {pedido.Cadete?.Nombre ?? "ninguno"}. Reasignando al nuevo cadete {nuevoCadete.Nombre}...";
         pedido.Cadete = nuevoCadete;
-        Console.WriteLine($"Pedido {pedido.Nro} reasignado al cadete {nuevoCadete.Nombre} exitosamente.");
+        return $"{mensaje} Pedido {pedido.Nro} reasignado al cadete {nuevoCadete.Nombre} exitosamente.";
     }
 
-    
-    public void EliminarCadete(Cadete cadete)
-    {
-        ListadoCadetes1.Remove(cadete);
-    }
-    public void AgregarCadete(Cadete cadete)
+
+
+    public string AgregarCadete(Cadete cadete)
     {
         ListadoCadetes1.Add(cadete);
+        return $"Cadete {cadete.Nombre} agregado exitosamente.";
     }
+
+    public string EliminarCadete(int idCadete)
+    {
+        Cadete cadete = ListadoCadetes1.FirstOrDefault(c => c.Id == idCadete);
+        if (cadete == null)
+        {
+            return "Cadete no encontrado.";
+        }
+        ListadoCadetes1.Remove(cadete);
+        return $"Cadete {cadete.Nombre} eliminado exitosamente.";
+    }
+    
 
 
 }
